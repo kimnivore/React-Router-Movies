@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-
+import MovieCard from './MovieCard';
 
 export default function Movie(props) {
   const [movie, setMovie] = useState();
@@ -17,7 +17,7 @@ export default function Movie(props) {
       .then(response => {
         // Study this response with a breakpoint or log statements
         // and set the response data as the 'movie' slice of state
-        console.log(response);
+        // console.log(response);
         setMovie(response.data);
       })
       .catch(error => {
@@ -28,7 +28,9 @@ export default function Movie(props) {
   }, [id]);
 
   // Uncomment this only when you have moved on to the stretch goals
-  // const saveMovie = evt => { }
+  const saveMovie = id => { 
+    props.saveMovie(id);
+  }
 
   if (!movie) {
     return <div>Loading movie information...</div>;
@@ -39,13 +41,14 @@ export default function Movie(props) {
   return (
     <div className="save-wrapper">
       <div className="movie-card">
-        <h2>{title}</h2>
+        {/* <h2>{title}</h2>
         <div className="movie-director">
           Director: <em>{director}</em>
         </div>
         <div className="movie-metascore">
           Metascore: <strong>{metascore}</strong>
-        </div>
+        </div> */}
+        <MovieCard movie={movie} />
         <h3>Actors</h3>
         {stars.map(star => (
           <div key={star} className="movie-star">
@@ -53,8 +56,7 @@ export default function Movie(props) {
           </div>
         ))}
       </div>
-      <div className="save-button">Save</div>
-
+      <div className="save-button" onClick={() => saveMovie(movie.id)}>Save</div>
     </div>
   );
 }
