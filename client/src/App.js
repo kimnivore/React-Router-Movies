@@ -43,7 +43,7 @@ export default function App () {
         <SavedList list={saved} />
 
         <Route exact path="/">
-          <MovieList movies={movieList} />
+          <MovieList style={{textDecoration: 'none'}} movies={movieList} />
         </Route>
         
         <Route path="/movies/:id" >
